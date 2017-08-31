@@ -43,6 +43,13 @@
                     <button type="submit" class="pure-button pure-button-primary">Definir Rota</button>
                     </div>
                   </div>
+                  <br/>
+                  
+                  <div class="pure-g">
+                    <div class="pure-u-1-4" style="text-align: center;">
+                    <button type="button" onclick="ajaxExec()" class="pure-button pure-button-primary">Teste Ajax</button>
+                    </div>
+                  </div>
                 </fieldset>
             </form>
           </div>
@@ -83,6 +90,25 @@
           event.preventDefault();
         });
       });
+
+      function ajaxExec(){
+          $.ajax({
+              url: 'ajax/go/',
+              type: "GET",
+              data: {
+                'user': 'teste'
+              },
+              dataType: 'json',
+              success: function (data) {               
+                alert(data.is_run);
+                
+              },
+              error : function(xhr,errmsg,err) {
+                  xhr;
+                  alert(errmsg);
+              }
+          });
+      }
     </script>
 
     <script>

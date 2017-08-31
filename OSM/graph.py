@@ -208,6 +208,8 @@ d2Lon = -43.241286
 
 G=le_arquivo(download_osm(d1Lon,d1Lat,d2Lon,d2Lat,"motorway|trunk|primary|secondary|tertiary|unclassified|track|service|residential"))
 
+print(G)
+
 pos=nx.circular_layout(G)
 A=nx.drawing.nx_agraph.to_agraph(G)
 A.write('grafo.dot')
