@@ -198,9 +198,9 @@ class OSM:
 
 # Gera arquivo com valores de exemplo
 d1Lat = -22.938751
-d1Lon = -43.410072
-d2Lat = -22.840069
-d2Lon = -43.253517
+d1Lon = -43.445778
+d2Lat = -22.746382
+d2Lon = -43.177986
 
 G=le_arquivo(download_osm(d1Lon,d1Lat,d2Lon,d2Lat,"motorway|trunk|primary|secondary|tertiary|unclassified|track|service|residential"))
 
