@@ -66,8 +66,8 @@ def le_arquivo(arquivo, estrada=True):
 
         if 'oneway' not in way.tags and  way.tags['highway'] != 'motorway':
             G.add_path(reversed(way.nds), id=way.id, highway = way.tags['highway'], data=way)
-
-        elif way.tags['oneway'] != 'yes' and way.tags['oneway'] != '-1' and  way.tags['highway'] != 'motorway':
+        elif 'oneway' in way.tags and way.tags['oneway'] != 'yes' and way.tags['oneway'] != '-1' and  way.tags['highway'] != 'motorway':
+        #elif way.tags['oneway'] != 'yes' and way.tags['oneway'] != '-1' and  way.tags['highway'] != 'motorway':
             G.add_path(reversed(way.nds), id=way.id, highway = way.tags['highway'], data=way)
 
     for node_id in G.nodes_iter():
