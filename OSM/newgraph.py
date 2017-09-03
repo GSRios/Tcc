@@ -197,12 +197,17 @@ class OSM:
         self.ways = new_ways
 
 # Gera arquivo com valores de exemplo
-d1Lat = -22.849541
-d1Lon = -43.465605
-d2Lat = -22.748895
-d2Lon = -43.294287
+d1Lat = -23.012400
+d1Lon = -43.373680
+d2Lat = -22.763162
+d2Lon = -42.958946
 
 G=le_arquivo(download_osm(d1Lon,d1Lat,d2Lon,d2Lat,"motorway|trunk|primary|secondary|tertiary|unclassified|track|service|residential"))
+
+print "Nodes: " + str(G.number_of_nodes())
+print "Edges: " +str(G.number_of_edges())
+print "Distancia: " + str(distancia(d1Lon, d1Lat, d2Lon, d2Lat))
+print "Densidade: " + str(nx.density(G))
 
 # Plota o grafo (graphviz)
 #pos=nx.circular_layout(G)
