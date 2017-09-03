@@ -197,10 +197,10 @@ class OSM:
         self.ways = new_ways
 
 # Gera arquivo com valores de exemplo
-d1Lat = -22.907308
-d1Lon = -43.287849
-d2Lat = -22.898927
-d2Lon = -43.276091
+d1Lat = -23.011709
+d1Lon = -43.408356
+d2Lat = -22.944067
+d2Lon = -43.333511
 
 G=le_arquivo(download_osm(d1Lon,d1Lat,d2Lon,d2Lat,"motorway|trunk|primary|secondary|tertiary|unclassified|track|service|residential"))
 
