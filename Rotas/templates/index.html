@@ -51,11 +51,17 @@
     }
 
     .formAux {
-      background-color:#343638; color: #FFF; height: 100%
+      background-color:#343638; 
+      color: #FFF; 
+      height: 100%;     
+    }
+
+    .formGroup{
+      height: calc(100% - 200px);  
     }
     @media only screen and (max-width: 500px) {
         #formId {
-            height: 45%;
+          height: 45%;
         }
 
         #mapDiv {
@@ -71,8 +77,9 @@
       <div class="row">
         <div class="col-sm-3 formAux" id="formId">
           <h3 style="color: #f7f8f9">Lista de Pontos</h3>
+          <br>
           <form>
-            <div class="form-group">
+            <div class="form-group" id="formGroup" style="overflow: auto;">
               <div class="input-group input-group-sm">
                 <input type="text" name="ponto" class="form-control" placeholder="Ponto 1">
                 <span class="input-group-btn">
