@@ -56,8 +56,9 @@
       height: 100%;     
     }
 
-    .formGroup{
+    #formGroup{
       height: calc(100% - 200px);  
+      overflow: auto;
     }
     @media only screen and (max-width: 500px) {
         #formId {
@@ -79,7 +80,7 @@
           <h3 style="color: #f7f8f9">Lista de Pontos</h3>
           <br>
           <form>
-            <div class="form-group" id="formGroup" style="overflow: auto;">
+            <div class="form-group" id="formGroup">
               <div class="input-group input-group-sm">
                 <input type="text" name="ponto" class="form-control" placeholder="Ponto 1">
                 <span class="input-group-btn">
