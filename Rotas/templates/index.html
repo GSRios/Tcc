@@ -34,6 +34,12 @@
       height: calc(100% - 220px);  
       overflow: auto;
     }
+
+    #formGroup::-webkit-scrollbar {
+      width: 0;     
+    }
+
+    
     @media only screen and (max-width: 500px) {
         #formId {
           height: 45%;
@@ -43,8 +49,16 @@
           height: 55%;
         }
         #formGroup{
-          height: calc(100% - 100px);  
+          height: calc(100% - 150px);  
           overflow: auto;
+        }
+
+        #container{
+          margin-top: -4.9%;
+        }
+
+         #title{
+          padding-top: 3%;
         }
     }
    </style>
@@ -52,10 +66,10 @@
   </head>
   <body>
 
-     <div class="container-fluid">      
+     <div class="container-fluid" id="container">      
       <div class="row">
         <div class="col-sm-3 formAux" id="formId">
-          <h3 style="color: #f7f8f9">Lista de Pontos</h3>
+          <h3 style="color: #f7f8f9" id="title">Lista de Pontos</h3>
           <br/>
           <button type="button" onclick="ajaxExec()" class="btn btn-default btn-md">Definir Rota</button>
           <br/>
