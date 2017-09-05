@@ -1,50 +1,23 @@
 <html>
   <head>
-    <title>Rotas</title>
+   <title>Rotas</title>
    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
    <style type="text/css" media="screen">
-    .ponto{
-      padding-bottom: 5px;
-      padding-right: 5px;
-    }        
-    .nopadding {
-       padding: 0 !important;
-       margin: 0 !important;
-    }
-  .embed-submit-field {
-    position: relative;
-    
-      input {
-        width: 100%;
-        padding: 15px;
+      .ponto{
+        padding-bottom: 5px;
+        padding-right: 5px;
+      }        
+      .nopadding {
+         padding: 0 !important;
+         margin: 0 !important;
       }
-      button {
-        position: absolute;
-        right: 10px;
-        top: 7px;
-        
-        
-        //Only styling from here, you can discard this
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        
-        border: none;
-        background: #ededed;
-        border-radius: 3px;
-        padding: 10px;
-        
-        transition: all .2s;
-        
-        &:hover {
-          background-color: #37C88D;
-          color: #fff;
-          cursor: pointer;
-        }
-      }
-    }
-    
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      box-sizing: border-box;
+    }    
     .input-group{
 
       padding-bottom: 2%;
@@ -57,7 +30,8 @@
     }
 
     #formGroup{
-      height: calc(100% - 200px);  
+      margin-top: 6%;
+      height: calc(100% - 220px);  
       overflow: auto;
     }
     @media only screen and (max-width: 500px) {
@@ -82,7 +56,9 @@
       <div class="row">
         <div class="col-sm-3 formAux" id="formId">
           <h3 style="color: #f7f8f9">Lista de Pontos</h3>
-          <br>
+          <br/>
+          <button type="button" onclick="ajaxExec()" class="btn btn-default btn-md">Definir Rota</button>
+          <br/>
           <form>
             <div class="form-group" id="formGroup">
               <div class="input-group input-group-sm">
@@ -101,12 +77,12 @@
                   </button>
                 </span>
               </div>
-            </div>
+            </div>             
           </form>
         </div>    
         <div class="col-sm-9 nopadding" id="mapDiv"> <div id="mapa"></div>
         </div>
-      </div>
+      </div>    
     </div> 
 
 
@@ -139,7 +115,7 @@
               url: 'ajax/go/',
               type: "GET",
               data: {
-                'user': 'teste'
+                'user': 'Usuário'
               },
               dataType: 'json',
               success: function (data) {               
@@ -164,7 +140,7 @@
               map.getProjectionObject() // to Spherical Mercator Projection
             );
 
-      var zoom=16;
+      var zoom=1;
 
       var markers = new OpenLayers.Layer.Markers( "Markers" );
       map.addLayer(markers);
