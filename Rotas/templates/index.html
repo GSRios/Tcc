@@ -53,7 +53,7 @@
           height: 55%;
         }
         #formGroup{
-          height: calc(100% - 150px);  
+          height: calc(100% - 157px);  
           overflow: auto;
         }
 
@@ -73,8 +73,7 @@
      <div class="container-fluid" id="container">      
       <div class="row">
         <div class="col-sm-3 formAux" id="formId">
-          <h3 style="color: #f7f8f9" id="title">Lista de Pontos</h3>            
-          <br/>
+          <h3 style="color: #f7f8f9" id="title">Lista de Pontos</h3>                     
           <form>
             <div class="form-group" id="formGroup">
               <div class="input-group input-group-sm">
@@ -128,8 +127,9 @@
             index++;
            $(this).attr("placeholder", "Ponto "+index);
           });         
-          let percent = parseFloat($("#formGroup")[0].scrollHeight/ $(window).height()) *100;
-          if(percent < 78){
+          let tamanhoTela = parseInt($("#formGroup")[0].scrollHeight,10) > parseInt($("#formGroup").height(), 10) ? $("#formGroup")[0].scrollHeight : $("#formGroup").height();
+          let percent = parseFloat(tamanhoTela/ $(window).height()) *100;
+          if(percent < 78.2){
            $("#formGroup").height("auto");
           }
           event.preventDefault();
