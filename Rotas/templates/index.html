@@ -139,13 +139,12 @@
         });
       });
 
-      function ajaxExec(){
-          alert($('[name="ponto"]').first().val());
+      function ajaxExec(){          
           $.ajax({
               url: 'ajax/go/',
               type: "GET",
               data: {
-                'user': 'Usuário'
+                'user': $('[name="ponto"]').first().val()
               },
               dataType: 'json',
               success: function (data) {               
