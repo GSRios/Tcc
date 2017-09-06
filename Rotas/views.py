@@ -7,6 +7,7 @@ def index(request):
 def teste(request):
 	user = request.GET.get('user')
 	data = {
-		'is_run' : int(user) *2
+		'lon' : user.split(",")[0],
+		'lat' : user.split(",")[1]
 	}
 	return JsonResponse(data)

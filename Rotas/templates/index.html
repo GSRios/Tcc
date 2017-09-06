@@ -147,9 +147,17 @@
                 'user': $('[name="ponto"]').first().val()
               },
               dataType: 'json',
-              success: function (data) {               
-                alert(data.is_run);
-                
+              success: function (data) {                              
+                map.addLayer(new OpenLayers.Layer.OSM());              
+                lonLat = new OpenLayers.LonLat(data.lon, data.lat)
+                            .transform(
+                              new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                              map.getProjectionObject() // to Spherical Mercator Projection
+                            );
+                markers = new OpenLayers.Layer.Markers( "Markers" );
+                map.addLayer(markers);
+
+                markers.addMarker(new OpenLayers.Marker(lonLat));                
               },
               error : function(xhr,errmsg,err) {
                   xhr;
@@ -160,7 +168,7 @@
     </script>
 
     <script>
-      map = new OpenLayers.Map("mapa");
+      var map = new OpenLayers.Map("mapa");
       map.addLayer(new OpenLayers.Layer.OSM());
 
       var lonLat = new OpenLayers.LonLat( -0.1279688 ,51.5077286 )
