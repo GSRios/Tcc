@@ -140,6 +140,7 @@
       });
 
       function ajaxExec(){
+          alert($('[name="ponto"]').first().val());
           $.ajax({
               url: 'ajax/go/',
               type: "GET",
