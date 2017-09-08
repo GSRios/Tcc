@@ -142,22 +142,13 @@
       function ajaxExec(){          
           $.ajax({
               url: 'ajax/go/',
-              type: "GET",
+              type: "POST",
               data: {
-                'user': $('[name="ponto"]').first().val()
+                'user': JSON.stringify(getAllPoints())
               },
               dataType: 'json',
-              success: function (data) {                              
-                map.addLayer(new OpenLayers.Layer.OSM());              
-                lonLat = new OpenLayers.LonLat(data.lon, data.lat)
-                            .transform(
-                              new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-                              map.getProjectionObject() // to Spherical Mercator Projection
-                            );
-                markers = new OpenLayers.Layer.Markers( "Markers" );
-                map.addLayer(markers);
-
-                markers.addMarker(new OpenLayers.Marker(lonLat));                
+              success: function (data) {                
+                plotaPonto(data);
               },
               error : function(xhr,errmsg,err) {
                   xhr;
@@ -185,6 +176,30 @@
       markers.addMarker(new OpenLayers.Marker(lonLat));
 
       map.setCenter (lonLat, zoom);
+
+      function plotaPonto(data){
+        $.map(data.lista, function(elem){
+          let aux = elem.coord.split(",");
+          map.addLayer(new OpenLayers.Layer.OSM());              
+          lonLat = new OpenLayers.LonLat(aux[0], aux[1])
+                      .transform(
+                        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                        map.getProjectionObject() // to Spherical Mercator Projection
+                      );
+          markers = new OpenLayers.Layer.Markers( "Markers" );
+          map.addLayer(markers);
+
+          markers.addMarker(new OpenLayers.Marker(lonLat)); 
+        });       
+      }
+
+      function getAllPoints(){
+        let array = new Array();
+        $('[name="ponto"]').map(function(index, elem) {
+            array.push({coord : $(this).val()});
+        });  
+        return array;
+      }
     </script>
   </body>
 </html>

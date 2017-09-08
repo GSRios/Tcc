@@ -1,13 +1,15 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
   return render(request, "index.html")
 
+@csrf_exempt
 def teste(request):
-	user = request.GET.get('user')
+	user = json.loads(request.POST.get('user'))
 	data = {
-		'lon' : user.split(",")[0],
-		'lat' : user.split(",")[1]
+		'lista' : user
 	}
 	return JsonResponse(data)
