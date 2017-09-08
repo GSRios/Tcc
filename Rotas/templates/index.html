@@ -19,13 +19,15 @@
     body {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       box-sizing: border-box;
-      height: 92.8%;
+      padding-top: 3.7%; 
+      height: 100%;
     }    
     .input-group{
-
       padding-bottom: 2%;
     }
-
+    #navbar{
+      margin-bottom: 30px;
+    }
     .formAux {
       background-color:#343638; 
       color: #FFF; 
@@ -51,9 +53,12 @@
       padding-right: 10px;
     }
 
-    #container .row{
-      margin-top: 3.6%;
+    #container .row{          
       height: 100%
+    }
+
+    #container{
+      position: relative;
     }
     @media only screen and (max-width: 767px) {
         #formId {
@@ -87,7 +92,7 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
