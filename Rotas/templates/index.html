@@ -4,6 +4,8 @@
    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    <style type="text/css" media="screen">
       .ponto{
         padding-bottom: 5px;
@@ -17,6 +19,7 @@
     body {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       box-sizing: border-box;
+      height: 92.8%;
     }    
     .input-group{
 
@@ -47,13 +50,18 @@
     .input-group-btn{
       padding-right: 10px;
     }
+
+    #container .row{
+      margin-top: 3.6%;
+      height: 100%
+    }
     @media only screen and (max-width: 767px) {
         #formId {
-          height: 45%;
+          display: none;
         }
 
         #mapDiv {
-          height: 55%;
+          height: 100%;
         }
         #formGroup{
           height: calc(100% - 157px);  
@@ -61,17 +69,55 @@
         }
 
         #container{
-          margin-top: -4.9%;
+          margin-top: 5%;
         }
 
          #title{
           padding-top: 3%;
         }
+
+        body {
+          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          box-sizing: border-box;
+          height: 89%;
+        }    
     }
    </style>
 
   </head>
   <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="#">WebSiteName</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Home</a></li>         
+            <li><a href="#">Sobre o Projeto</a></li>             
+            <li><a href="#">Help</a></li>
+          </ul>          
+        </div>
+      </div>
+    </nav>  
+    <!--<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">WebSiteName</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Sobre o Projeto</a></li>             
+          <li><a href="#">Help</a></li>
+        </ul>
+      </div>
+    </nav>-->
 
      <div class="container-fluid" id="container">      
       <div class="row">
