@@ -52,13 +52,32 @@
     .input-group-btn{
       padding-right: 10px;
     }
-
+    #myModal{
+      height: 100%;
+    }
     #container .row{          
       height: 100%
     }
-
+     #ancDefPonto{
+      display: none;
+    }
     #container{
       position: relative;
+    }
+
+    .modal-dialog {
+      width: 90%;
+      height: 95%;
+      margin-right: 0;
+      margin-left: 0;
+      padding-top: 10%;
+      padding-left: 10%;
+      padding-right: 0;
+    }
+
+    .modal-content {
+      height: auto;
+      min-height: 90%;      
     }
     @media only screen and (max-width: 767px) {
         #formId {
@@ -81,10 +100,14 @@
           padding-top: 3%;
         }
 
+        #ancDefPonto{
+          display: inline-block;
+        }
+
         body {
           font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
           box-sizing: border-box;
-          padding-top: 15px;
+          padding-top: 30px;
           height: 100%;
         }    
     }
@@ -105,7 +128,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">Home</a></li>         
+            <li class="active"><a href="#">Home</a></li> 
+            <li><a href="#" id="ancDefPonto" data-toggle="modal" data-target="#myModal">Definir Pontos</a></li>        
             <li><a href="#">Sobre o Projeto</a></li>             
             <li><a href="#">Help</a></li>
           </ul>          
@@ -155,7 +179,26 @@
         </div>
       </div>    
     </div> 
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <p>Some text in the modal.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
     <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
