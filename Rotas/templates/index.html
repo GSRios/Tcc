@@ -3,8 +3,11 @@
    <title>Rotas</title>
    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://openlayers.org/en/v4.3.2/css/ol.css" type="text/css">
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+   <script src="https://openlayers.org/en/v4.3.2/build/ol.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    <style type="text/css" media="screen">
       .ponto{
@@ -28,6 +31,19 @@
     #navbar{
       margin-bottom: 30px;
     }
+
+    .ol-touch .rotate-north {
+        top: 80px;
+     }
+    .ol-mycontrol {
+        /*background-color: rgba(255, 255, 255, 0.4);*/
+        border-radius: 4px;
+        padding: 2px;
+        position: absolute;
+        width:300px;
+        top: 5px;
+        left:45%;
+     }
     .formAux {
       background-color:#343638; 
       color: #FFF; 
@@ -79,6 +95,9 @@
       height: auto;
       min-height: 90%;      
     }
+    #addResponsive{
+      display: none;
+    }
     @media only screen and (max-width: 767px) {
         #formId {
           display: none;
@@ -100,9 +119,10 @@
           padding-top: 3%;
         }
 
-        #ancDefPonto{
+        #addResponsive{
           display: inline-block;
-        }
+        } 
+
 
         body {
           font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -128,8 +148,7 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">Home</a></li> 
-            <li><a href="#" id="ancDefPonto" data-toggle="modal" data-target="#myModal">Definir Pontos</a></li>        
+            <li class="active"><a href="#">Home</a></li>      
             <li><a href="#">Sobre o Projeto</a></li>             
             <li><a href="#">Help</a></li>
           </ul>          
@@ -175,14 +194,18 @@
           </form>
           <button type="button" onclick="ajaxExec()" class="btn btn-default btn-md">Definir Rota</button>
         </div>    
-        <div class="col-sm-9 nopadding" id="mapDiv"> <div id="mapa"></div>
+        <div class="col-sm-9 nopadding" id="mapDiv"> 
+          <div id="mapa">
+            <div id="addResponsive" class="ol-selectable ol-mycontrol">
+              <button type="button" onclick="$('#myModal').modal('show');" >Adicionar Pontos</button>
+            </div>
+          </div>
         </div>
       </div>    
     </div> 
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
@@ -196,12 +219,8 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
-
       </div>
     </div>
-
-    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     <script>
       $(document).ready(function() {
@@ -253,45 +272,76 @@
       }
     </script>
 
-    <script>
-      var map = new OpenLayers.Map("mapa");
-      map.addLayer(new OpenLayers.Layer.OSM());
+    <script>           
+       var 
+          vectorSource = new ol.source.Vector(),
+          vectorLayer = new ol.layer.Vector({
+            source: vectorSource
+          }),
+          olview = new ol.View({
+              center: [0, 0],
+              zoom: 2,
+              minZoom: 2,
+              maxZoom: 20
+          }),
+          map = new ol.Map({             
+              target: 'mapa',
+              view: olview,
+              layers: [
+                  new ol.layer.Tile({                     
+                      source: new ol.source.OSM()
+                  }),
+                  vectorLayer
+              ],
+             controls: ol.control.defaults({}).extend([
+                new ol.control.Control({
+                  element : document.getElementById('addResponsive')
+                })
+              ])
+          });
+         
 
-      var lonLat = new OpenLayers.LonLat( -0.1279688 ,51.5077286 )
-            .transform(
-              new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-              map.getProjectionObject() // to Spherical Mercator Projection
+          var iconStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 46],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                opacity: 0.75,
+                src: '//openlayers.org/en/v4.3.2/examples/data/icon.png'
+            }),
+            text: new ol.style.Text({
+                font: '12px Calibri,sans-serif',
+                fill: new ol.style.Fill({ color: '#000' }),
+                stroke: new ol.style.Stroke({
+                    color: '#fff', width: 2
+                }),
+                text: 'Some text'
+            })
+        });
+        /*map.on('click', function(evt){
+            var feature = new ol.Feature(
+                new ol.geom.Point(evt.coordinate)
             );
-
-      var zoom=1;
-
-      var markers = new OpenLayers.Layer.Markers( "Markers" );
-      map.addLayer(markers);
-
-      markers.addMarker(new OpenLayers.Marker(lonLat));
-
-      map.setCenter (lonLat, zoom);
+            feature.setStyle(iconStyle);
+            vectorSource.addFeature(feature);
+        });*/
 
       function plotaPonto(data){
         $.map(data.lista, function(elem){
           let aux = elem.coord.split(",");
-          map.addLayer(new OpenLayers.Layer.OSM());              
-          lonLat = new OpenLayers.LonLat(aux[0], aux[1])
-                      .transform(
-                        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-                        map.getProjectionObject() // to Spherical Mercator Projection
-                      );
-          markers = new OpenLayers.Layer.Markers( "Markers" );
-          map.addLayer(markers);
-
-          markers.addMarker(new OpenLayers.Marker(lonLat)); 
+          let feat = new ol.Feature(
+                new ol.geom.Point(aux)
+            );
+            feat.setStyle(iconStyle);
+            vectorSource.addFeature(feat);
         });       
       }
 
       function getAllPoints(){
         let array = new Array();
         $('[name="ponto"]').map(function(index, elem) {
-            array.push({coord : $(this).val()});
+            if($.trim($(this).val()) != "") 
+              array.push({coord : $(this).val()});
         });  
         return array;
       }
