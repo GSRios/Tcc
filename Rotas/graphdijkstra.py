@@ -280,7 +280,7 @@ def get_dijkstra_path(startLat, startLong, endLat, endLong):
     SP = nx.dijkstra_path(G,nearest_node(startLat,startLong, G), nearest_node(endLat, endLong, G), weight='weight')
     for i in SP:
         nodeAux = G.node[i]['label'].split(",")
-        return_list.append({'lon' : float(nodeAux[1]), 'lat' : float(nodeAux[0])})
+        return_list.append([float(nodeAux[1]), float(nodeAux[0])])
     return return_list
 
 

@@ -316,8 +316,14 @@
                 anchorYUnits: 'pixels',
                 opacity: 0.75,
                 src: '//openlayers.org/en/v4.3.2/examples/data/icon.png'
-            })           
+            })                 
         });
+        var lineStyle = new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                  color: '#000',
+                  width: 3
+              })
+          });      
         /*map.on('click', function(evt){
             var feature = new ol.Feature(
                 new ol.geom.Point(evt.coordinate)
@@ -328,15 +334,21 @@
 
       function plotaPonto(data){
         let first = data.lista[0];
-        $.map(data.lista, function(elem){        
-          let feat = new ol.Feature({
-                            geometry: new  
-                              ol.geom.Point(ol.proj.transform([elem.lon, elem.lat], 'EPSG:4326',   'EPSG:3857'))                        
-                          });
-            feat.setStyle(iconStyle);
-            vectorSource.addFeature(feat);
-        });   
-        map.getView().setCenter(ol.proj.transform([first.lon, first.lat], 'EPSG:4326', 'EPSG:3857'));
+        let last = data.lista[data.lista.length -1];
+        addPointer(first);
+        addPointer(last);
+        
+        let lineString = new ol.geom.LineString(data.lista);        
+        lineString.transform('EPSG:4326', 'EPSG:3857');
+        
+        let feat = new ol.Feature({
+            geometry: lineString,
+            name: 'Line'
+        });
+        feat.setStyle(lineStyle);
+        vectorSource.addFeature(feat);
+
+        map.getView().setCenter(ol.proj.transform(first, 'EPSG:4326', 'EPSG:3857'));
         map.getView().setZoom(10);   
       }
 
@@ -347,6 +359,15 @@
               array.push($(this).val());
         });  
         return array;
+      }
+
+      function addPointer(ar){
+        let feat = new ol.Feature({
+                            geometry: new  
+                              ol.geom.Point(ol.proj.transform(ar, 'EPSG:4326',   'EPSG:3857'))                        
+                          });
+        feat.setStyle(iconStyle);            
+        vectorSource.addFeature(feat);   
       }
     </script>
   </body>
