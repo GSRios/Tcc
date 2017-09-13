@@ -333,6 +333,7 @@
         });*/
 
       function plotaPonto(data){
+        vectorSource.clear(true);
         let first = data.lista[0];
         let last = data.lista[data.lista.length -1];
         addPointer(first);
@@ -349,7 +350,7 @@
         vectorSource.addFeature(feat);
 
         map.getView().setCenter(ol.proj.transform(first, 'EPSG:4326', 'EPSG:3857'));
-        map.getView().setZoom(10);   
+        map.getView().setZoom(12);   
       }
 
       function getAllPoints(){
