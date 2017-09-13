@@ -261,7 +261,7 @@
               url: 'ajax/go/',
               type: "POST",
               data: {
-                'user': JSON.stringify(getAllPoints())
+                'coordinate': JSON.stringify(getAllPoints())
               },
               dataType: 'json',
               success: function (data) {                
@@ -316,15 +316,7 @@
                 anchorYUnits: 'pixels',
                 opacity: 0.75,
                 src: '//openlayers.org/en/v4.3.2/examples/data/icon.png'
-            }),
-            text: new ol.style.Text({
-                font: '12px Calibri,sans-serif',
-                fill: new ol.style.Fill({ color: '#000' }),
-                stroke: new ol.style.Stroke({
-                    color: '#fff', width: 2
-                }),
-                text: 'Some text'
-            })
+            })           
         });
         /*map.on('click', function(evt){
             var feature = new ol.Feature(
@@ -335,21 +327,24 @@
         });*/
 
       function plotaPonto(data){
-        $.map(data.lista, function(elem){
-          let aux = elem.coord.split(",");
-          let feat = new ol.Feature(
-                new ol.geom.Point(aux)
-            );
+        let first = data.lista[0];
+        $.map(data.lista, function(elem){        
+          let feat = new ol.Feature({
+                            geometry: new  
+                              ol.geom.Point(ol.proj.transform([elem.lon, elem.lat], 'EPSG:4326',   'EPSG:3857'))                        
+                          });
             feat.setStyle(iconStyle);
             vectorSource.addFeature(feat);
-        });       
+        });   
+        map.getView().setCenter(ol.proj.transform([first.lon, first.lat], 'EPSG:4326', 'EPSG:3857'));
+        map.getView().setZoom(10);   
       }
 
       function getAllPoints(){
         let array = new Array();
         $('[name="ponto"]').map(function(index, elem) {
             if($.trim($(this).val()) != "") 
-              array.push({coord : $(this).val()});
+              array.push($(this).val());
         });  
         return array;
       }
