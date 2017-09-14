@@ -241,8 +241,10 @@
             $('#formId > form').html($('.modal-body > form').clone(true));
             $('.modal-body').html("");            
           }else{
-            $('.modal-body').html($('#formId > form').clone(true));
-            $('#formId > form').html("");
+            if($('.modal-body > form').html() == "" || $('.modal-body > form').html() == undefined){
+              $('.modal-body').html($('#formId > form').clone(true));
+              $('#formId > form').html("");
+            }
           }
         });   
         var total_pontos = 0;
