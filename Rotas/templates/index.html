@@ -223,8 +223,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Lista de Pontos</h4>
           </div>
-          <div class="modal-body">
-            <p>Some text in the modal.</p>
+          <div class="modal-body">            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -233,8 +232,19 @@
       </div>
     </div>
 
-    <script>
+    <script>      
       $(document).ready(function() {
+        $(window).resize(function() {
+          if ($(this).width() > 767 && ($('.modal-body > form').html() != "" 
+              || $('.modal-body > form').html() != undefined)) {
+            $('#myModal').modal('hide');
+            $('#formId > form').html($('.modal-body > form').clone(true));
+            $('.modal-body').html("");            
+          }else{
+            $('.modal-body').html($('#formId > form').clone(true));
+            $('#formId > form').html("");
+          }
+        });   
         var total_pontos = 0;
         $("#add-ponto").click(function(event) {
           total_pontos = $('[name="ponto"]').length;
@@ -284,7 +294,9 @@
 
       function carregaModal(){
         $('#myModal').modal('show');
-        $('.modal-body').html($('#formId > form').clone(true));       
+        if($('.modal-body > form').html() == "" || $('.modal-body > form').html() == undefined){
+          $('.modal-body').html($('#formId > form').clone(true));      
+        }             
       }
     </script>
 
