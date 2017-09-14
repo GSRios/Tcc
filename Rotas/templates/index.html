@@ -234,16 +234,20 @@
 
     <script>      
       $(document).ready(function() {
+        if($(window).width() < 767){
+           $('.modal-body').html($('#formId > form').clone(true));
+           $('#formId > form').children().remove();
+        }
         $(window).resize(function() {
           if ($(this).width() > 767 && ($('.modal-body > form').html() != "" 
               || $('.modal-body > form').html() != undefined)) {
             $('#myModal').modal('hide');
             $('#formId > form').html($('.modal-body > form').clone(true));
-            $('.modal-body').html("");            
+            $('.modal-body').children().remove();            
           }else{
             if($('.modal-body > form').html() == "" || $('.modal-body > form').html() == undefined){
               $('.modal-body').html($('#formId > form').clone(true));
-              $('#formId > form').html("");
+              $('#formId > form').children().remove();
             }
           }
         });   
