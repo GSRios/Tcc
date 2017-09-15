@@ -220,7 +220,7 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" onclick="$('#myModal').modal('hide');">&times;</button>
             <h4 class="modal-title">Lista de Pontos</h4>
           </div>
           <div class="modal-body"> 
@@ -236,17 +236,17 @@
     <script>      
       $(document).ready(function() {
         if($(window).width() < 767){
-           $('.modal-body > form').html($('#formId > form').clone(true));
+           $('.modal-body > form').append($('#formId > form').clone(true));
            $('#formId > form').children().remove();
         }
         $(window).resize(function() {
           if ($(this).width() > 767) {
             $('#myModal').modal('hide');
-            $('#formId > form').html($('.modal-body > form').clone(true));
+            $('#formId > form').append($('.modal-body > form').clone(true));
             $('.modal-body > form').children().remove();            
           }else{
             if($.trim($('.modal-body > form').html()) == "" || $('.modal-body > form').html() == undefined){
-              $('.modal-body').html($('#formId > form').clone(true));
+              $('.modal-body > form').append($('#formId > form').clone(true));
               $('#formId > form').children().remove();
             }
           }
