@@ -1,134 +1,401 @@
 <html>
   <head>
-    <title>Rotas</title>
+   <title>Rotas</title>
    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+   <link rel="stylesheet" href="https://openlayers.org/en/v4.3.2/css/ol.css" type="text/css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+   <script src="https://openlayers.org/en/v4.3.2/build/ol.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    <style type="text/css" media="screen">
-    .ponto{
-      padding-bottom: 5px;
-      padding-right: 5px;
-    }  
+      .ponto{
+        padding-bottom: 5px;
+        padding-right: 5px;
+      }        
+      .nopadding {
+         padding: 0 !important;
+         margin: 0 !important;
+      }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      box-sizing: border-box;
+      padding-top: 50px; 
+      height: 100%;
+    }    
+    .input-group{
+      padding-bottom: 2%;
+    }
+    #navbar{
+      margin-bottom: 30px;
+    }
+
+    .ol-touch .rotate-north {
+        top: 80px;
+     }
+    .ol-mycontrol {
+        /*background-color: rgba(255, 255, 255, 0.4);*/
+        border-radius: 4px;
+        padding: 2px;
+        position: absolute;
+        width:300px;
+        top: 5px;
+        left:35%;
+     }
+    .formAux {
+      background-color:#343638; 
+      color: #FFF; 
+      height: 100%;     
+    }
+
+    #formGroup{
+      margin-top: 6%;      
+      overflow: auto;
+    }
+
+    #formGroup::-webkit-scrollbar {
+      width: 5px;
+      background-color: #F5F5F5;
+      margin-left: 20%;
+    }
+
+    #formGroup::-webkit-scrollbar-thumb{
+      background-color: rgba(0,0,0,0.3);
+      background-color: #555;
+    }
+    .input-group-btn{
+      padding-right: 10px;
+    }
+    #myModal{
+      height: 100%;
+    }
+    #container .row{          
+      height: 100%
+    }
+     #ancDefPonto{
+      display: none;
+    }
+    #container{
+      position: relative;
+    }
+
+    .modal-dialog {
+      width: 98%;
+      height: 90%;
+      margin-right: 0;
+      margin-left: 0;      
+      padding-right: 0;
+      padding-left: 3%;
+    }
+
+    .modal-content {
+      height: auto;
+      min-height: 90%;  
+      background-color: #343638;    
+    }
+    #addResponsive{
+      display: none;
+    }
+    .modal-title{
+      color:#f7f8f9
+    }
+    @media only screen and (max-width: 767px) {
+        #formId {
+          display: none;
+        }
+
+        #mapDiv {
+          height: 100%;
+        }
+        #formGroup{
+          height: calc(100% - 157px);  
+          overflow: auto;
+        }
+
+        #container{
+          margin-top: 5%;
+        }
+
+         #title{
+          padding-top: 3%;
+        }
+
+        #addResponsive{
+          display: inline-block;
+        } 
+
+        #addResponsive  button{
+          color: #f7f8f9;
+          background-color: #343638;
+          opacity: 0.7;
+        }
+
+        #addResponsive  button:hover{
+          opacity: 1;
+        }
+        body {
+          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          box-sizing: border-box;
+          padding-top: 30px;
+          height: 100%;
+        }    
+    }
    </style>
 
   </head>
   <body>
 
-      <div class="pure-g">
-
-        <div class="pure-u-1-5" style="text-align:center;padding-top: 5%;">
-          <div class="pure-g" style="text-align: center;padding-left: 5%;">
-           <form class="pure-form">
-                <fieldset class="pure-u-1-1">
-                  <div class="pure-g">
-                    <div class=pure-u-1-1>
-                      <legend class="pure-u-1-1">Lista de Pontos</legend>  
-                    </div>
-                  </div>
-                  <div class="pure-g ponto">
-                    <div class="pure-u-4-4">
-                      <input type="text" name="ponto" placeholder="Ponto 1" class="pure-u-4-5">
-                      <button id="add-ponto" class="pure-button pure-button-primary pure-u-1-5">+</button>
-                    </div>
-                  </div>
-                  <div class="pure-g ponto">
-                    <div clas="pure-u-4-4">
-                      <input type="text" name="ponto" placeholder="Ponto 2" class="pure-u-4-5">
-                      <button class="remove-ponto pure-button pure-button-primary pure-u-1-5">-</button>  
-                    </div>
-                  </div>
-
-                  <div class="pure-g">
-                    <div class="pure-u-1-4" style="text-align: center;">
-                    <button type="submit" class="pure-button pure-button-primary">Definir Rota</button>
-                    </div>
-                  </div>
-                  <br/>
-                  
-                  <div class="pure-g">
-                    <div class="pure-u-1-4" style="text-align: center;">
-                    <button type="button" onclick="ajaxExec()" class="pure-button pure-button-primary">Teste Ajax</button>
-                    </div>
-                  </div>
-                </fieldset>
-            </form>
-          </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="#">Graphs</a>
         </div>
-        <div class="pure-u-4-5" style="text-align:center;">
-          <div class="pure-g">
-            <div class="pure-u-1-1">
-              <div id="mapa"></div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Home</a></li>      
+            <li><a href="#">Sobre o Projeto</a></li>             
+            <li><a href="#">Help</a></li>
+          </ul>          
+        </div>
+      </div>
+    </nav>  
+    <!--<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">WebSiteName</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Sobre o Projeto</a></li>             
+          <li><a href="#">Help</a></li>
+        </ul>
+      </div>
+    </nav>-->
+
+     <div class="container-fluid" id="container">      
+      <div class="row">
+        <div class="col-sm-3 formAux" id="formId">
+          <h3 style="color: #f7f8f9" id="title">Lista de Pontos</h3>                     
+          <form>
+            <div class="form-group" id="formGroup">
+              <div class="input-group input-group-sm">
+                <input type="text" value="-22.9013576,-43.3116128" name="ponto" class="form-control" placeholder="Ponto 1">
+                <span class="input-group-btn">
+                  <button id="add-ponto" class="btn btn-default" type="submit">
+                      <i class="glyphicon glyphicon-plus"></i>
+                  </button>
+                </span>
+              </div>
+               <div class="input-group input-group-sm">
+                <input type="text" value="-22.8671742,-43.3695197" name="ponto" class="form-control" placeholder="Ponto 2">
+                <span class="input-group-btn">
+                  <button class="remove-ponto btn btn-default" type="submit">
+                      <i class="glyphicon glyphicon-minus"></i>
+                  </button>
+                </span>
+              </div>              
+            </div>             
+          </form>
+          <button type="button" onclick="ajaxExec()" class="btn btn-default btn-md">Definir Rota</button>
+        </div>    
+        <div class="col-sm-9 nopadding" id="mapDiv"> 
+          <div id="mapa">
+            <div id="addResponsive" class="ol-selectable ol-mycontrol">
+              <button type="button" class="btn btn-default btn-md" onclick="carregaModal()" >Adicionar Pontos</button>
             </div>
           </div>
         </div>
+      </div>    
+    </div> 
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Lista de Pontos</h4>
+          </div>
+          <div class="modal-body"> 
+            <form></form>           
+          </div>
+          <div class="modal-footer">
+            <button type="button" onclick="ajaxExec()" class="btn btn-default btn-md" data-dismiss="modal">Definir Rota</button>
+          </div>
+        </div>
       </div>
+    </div>
 
-
-
-
-
-    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
-    <script>
+    <script>      
       $(document).ready(function() {
+        if($(window).width() < 767){
+           $('.modal-body > form').append($('#formId > form').clone(true));
+           $('#formId > form').children().remove();
+        }
+        $(window).resize(function() {
+          if ($(this).width() > 767) {
+            $('#myModal').modal('hide');
+            $('#formId > form').append($('.modal-body > form').clone(true));
+            $('.modal-body > form').children().remove();            
+          }else{
+            if($.trim($('.modal-body > form').html()) == "" || $('.modal-body > form').html() == undefined){
+              $('.modal-body > form').append($('#formId > form').clone(true));
+              $('#formId > form').children().remove();
+            }
+          }
+        });   
         var total_pontos = 0;
         $("#add-ponto").click(function(event) {
           total_pontos = $('[name="ponto"]').length;
           total_pontos++;
           console.log(total_pontos);
-          $("div .ponto").last().after('<div class="pure-g ponto"><div clas="pure-u-4-4"><input type="text" name="ponto" placeholder="Ponto '+total_pontos+'" class="pure-u-4-5"><button class="remove-ponto pure-button pure-button-primary pure-u-1-5">-</button></div></div>');
-          event.preventDefault();
+          let percent = parseFloat($("#formGroup").height()/ $(window).height()) *100;
+          if(percent > 78){
+            $("#formGroup").height("78%");
+          }
+          $("div .input-group").last().after('<div class="input-group input-group-sm"><input type="text" name="ponto" class="form-control" placeholder="Ponto '+total_pontos+'"> <span class="input-group-btn"><button class="remove-ponto btn btn-default" type="submit"><i class="glyphicon glyphicon-minus"></i> </button></span></div>');
+          event.preventDefault();         
+
         });
 
-        $(document).on('click', '.remove-ponto', function(event) {
-          $(this).closest('.ponto').remove();
+        $(document).on('click', '.remove-ponto', function(event) {          
+          $(this).closest('.input-group').remove();
           $('[name="ponto"]').map(function(index, elem) {
             index++;
            $(this).attr("placeholder", "Ponto "+index);
-          })
+          });         
+          let tamanhoTela = parseInt($("#formGroup")[0].scrollHeight,10) > parseInt($("#formGroup").height(), 10) ? $("#formGroup")[0].scrollHeight : $("#formGroup").height();
+          let percent = parseFloat(tamanhoTela/ $(window).height()) *100;
+          if(percent < 78.2){
+           $("#formGroup").height("auto");
+          }
           event.preventDefault();
         });
       });
 
-      function ajaxExec(){
+      function ajaxExec(){          
           $.ajax({
               url: 'ajax/go/',
-              type: "GET",
+              type: "POST",
               data: {
-                'user': 'teste'
+                'coordinate': JSON.stringify(getAllPoints())
               },
               dataType: 'json',
-              success: function (data) {               
-                alert(data.is_run);
-                
+              success: function (data) {                
+                plotaPonto(data);
               },
               error : function(xhr,errmsg,err) {
-                  xhr;
-                  alert(errmsg);
+                  alert(xhr.responseText);
+                  //alert(errmsg);
               }
           });
       }
+
+      function carregaModal(){
+        $('#myModal').modal('show');
+        /*if($('.modal-body > form').html() == "" || $('.modal-body > form').html() == undefined){
+          $('.modal-body').html($('#formId > form').clone(true));      
+        } */            
+      }
     </script>
 
-    <script>
-      map = new OpenLayers.Map("mapa");
-      map.addLayer(new OpenLayers.Layer.OSM());
+    <script>           
+       var 
+          vectorSource = new ol.source.Vector(),
+          vectorLayer = new ol.layer.Vector({
+            source: vectorSource
+          }),
+          olview = new ol.View({
+              center: [0, 0],
+              zoom: 2,
+              minZoom: 2,
+              maxZoom: 20
+          }),
+          map = new ol.Map({             
+              target: 'mapa',
+              view: olview,
+              layers: [
+                  new ol.layer.Tile({                     
+                      source: new ol.source.OSM()
+                  }),
+                  vectorLayer
+              ],
+             controls: ol.control.defaults({}).extend([
+                new ol.control.Control({
+                  element : document.getElementById('addResponsive')
+                })
+              ])
+          });
+         
 
-      var lonLat = new OpenLayers.LonLat( -0.1279688 ,51.5077286 )
-            .transform(
-              new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-              map.getProjectionObject() // to Spherical Mercator Projection
+          var iconStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 46],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                opacity: 0.75,
+                src: '//openlayers.org/en/v4.3.2/examples/data/icon.png'
+            })                 
+        });
+        var lineStyle = new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                  color: '#000',
+                  width: 3
+              })
+          });      
+        /*map.on('click', function(evt){
+            var feature = new ol.Feature(
+                new ol.geom.Point(evt.coordinate)
             );
+            feature.setStyle(iconStyle);
+            vectorSource.addFeature(feature);
+        });*/
 
-      var zoom=16;
+      function plotaPonto(data){
+        vectorSource.clear(true);
+        let first = data.lista[0];
+        let last = data.lista[data.lista.length -1];
+        addPointer(first);
+        addPointer(last);
+        
+        let lineString = new ol.geom.LineString(data.lista);        
+        lineString.transform('EPSG:4326', 'EPSG:3857');
+        
+        let feat = new ol.Feature({
+            geometry: lineString,
+            name: 'Line'
+        });
+        feat.setStyle(lineStyle);
+        vectorSource.addFeature(feat);
 
-      var markers = new OpenLayers.Layer.Markers( "Markers" );
-      map.addLayer(markers);
+        map.getView().setCenter(ol.proj.transform(first, 'EPSG:4326', 'EPSG:3857'));
+        map.getView().setZoom(12);   
+      }
 
-      markers.addMarker(new OpenLayers.Marker(lonLat));
+      function getAllPoints(){
+        let array = new Array();
+        $('[name="ponto"]').map(function(index, elem) {
+            if($.trim($(this).val()) != "") 
+              array.push($(this).val());
+        });  
+        return array;
+      }
 
-      map.setCenter (lonLat, zoom);
+      function addPointer(ar){
+        let feat = new ol.Feature({
+                            geometry: new  
+                              ol.geom.Point(ol.proj.transform(ar, 'EPSG:4326',   'EPSG:3857'))                        
+                          });
+        feat.setStyle(iconStyle);            
+        vectorSource.addFeature(feat);   
+      }
     </script>
   </body>
 </html>
