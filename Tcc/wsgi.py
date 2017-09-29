@@ -10,8 +10,8 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 import os
 import sys
 
-sys.path.append('/opt/bitnami/apps/django/django_projects/Tcc')
-os.environ.setdefault("PYTHON_EGG_CACHE", "/opt/bitnami/apps/django/django_projects/Tcc/egg_cache")
+sys.path.append('/home/ubuntu/Tcc')
+os.environ.setdefault("PYTHON_EGG_CACHE", "/home/ubuntu/Tcc/egg_cache")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Tcc.settings")
 
 from django.core.wsgi import get_wsgi_application
