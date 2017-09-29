@@ -62,13 +62,13 @@ def le_arquivo(arquivo, estrada=True):
 
         if estrada and 'highway' not in way.tags:
             continue
-        G.add_path(way.nds, id=way.id, highway = way.tags['highway'], data=way)
+        G.add_path(way.nds, id=way.id, highway = way.tags['highway'])
 
         if 'oneway' not in way.tags and  way.tags['highway'] != 'motorway':
-            G.add_path(reversed(way.nds), id=way.id, highway = way.tags['highway'], data=way)
+            G.add_path(reversed(way.nds), id=way.id, highway = way.tags['highway'])
         elif 'oneway' in way.tags and way.tags['oneway'] != 'yes' and way.tags['oneway'] != '-1' and  way.tags['highway'] != 'motorway':
         #elif way.tags['oneway'] != 'yes' and way.tags['oneway'] != '-1' and  way.tags['highway'] != 'motorway':
-            G.add_path(reversed(way.nds), id=way.id, highway = way.tags['highway'], data=way)
+            G.add_path(reversed(way.nds), id=way.id, highway = way.tags['highway'])
 
     for node_id in G.nodes_iter():
         n = osm.nodes[node_id]
@@ -202,7 +202,7 @@ d1Lon = -43.655205
 d2Lat = -22.749231
 d2Lon = -43.180046
 
-G=le_arquivo(download_osm(d1Lon,d1Lat,d2Lon,d2Lat,"motorway|trunk|primary|secondary|tertiary|unclassified|track|service|residential"))
+G=le_arquivo(open(r'C:\Users\mrios\Documents\Tcc\OSM\rio-de-janeiro.xml'))
 
 print "Nodes: " + str(G.number_of_nodes())
 print "Edges: " +str(G.number_of_edges())
