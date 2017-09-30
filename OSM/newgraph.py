@@ -27,12 +27,15 @@
 ======================================================================
 """
 import xml.sax
+import sys
 import copy
 import networkx as nx
 import graph2Cypher as g2c
 from math import radians, cos, sin, asin, sqrt
 from urllib import urlopen
 
+
+sys.setrecursionlimit(1000000)
 def download_osm(left,bottom,right,top,highway_cat):
 
     try:
