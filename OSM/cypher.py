@@ -18,7 +18,7 @@ def graph2Cypher(aGraph):
     edgeStatements = []
     
     #Partially generate the node representations
-    for aNode in G.nodes(data = True):
+    for aNode in aGraph.nodes(data = True):
         #Generate a node identifier for Cypher
         varName = getRndTag(2)+getRndTag(2,dct=numDCT)
         #Append the node's ID attribute so that the node-ID information used by Networkx is preserved.
@@ -30,7 +30,7 @@ def graph2Cypher(aGraph):
         nodeStatements[aNode[0]] = [varName, "(%s %s)" % (varName, nodeAttributes)]
         
     #Generate the relationship representations
-    for anEdge in G.edges(data = True):
+    for anEdge in aGraph.edges(data = True):
         edgeItems = anEdge[2].items()
         edgeAttributes = ""
         if len(edgeItems)>0:
