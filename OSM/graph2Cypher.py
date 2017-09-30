@@ -41,7 +41,7 @@ def graph2Cypher(aGraph):
         edgeItems = anEdge[2].items()
         edgeAttributes = ""
         if len(edgeItems)>0:
-            edgeAttributes = "{%s}" % ",".join(map(lambda x:"%s:%s" %(literal_eval(x[0],x[1])) if not type(x[1])==str else "%s:'%s'" %(literal_eval(x[0],x[1])) ,edgeItems))
+            edgeAttributes = "{%s}" % ",".join(map(lambda x:"%s:%s" %(x[0],literal_eval(x[1])) if not type(x[1])==str else "%s:'%s'" %(x[0],literal_eval(x[1])) ,edgeItems))
         #NOTE: Declare the links by their Cypher node-identifier rather than their Networkx node identifier
         #edgeStatements.append("(%s)-[:LINKED_TO %s]->(%s)" % (nodeStatements[anEdge[0]][0], edgeAttributes, nodeStatements[anEdge[1]][0]))
         print("create (%s)-[:LINKED_TO %s]->(%s)" % (nodeStatements[anEdge[0]][0], edgeAttributes, nodeStatements[anEdge[1]][0]))
