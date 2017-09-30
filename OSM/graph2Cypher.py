@@ -32,7 +32,7 @@ def graph2Cypher(aGraph):
         #nodeStatements[aNode[0]] = [varName, "(%s %s)" % (varName, nodeAttributes)]
         #i_node = Node(varName, nodeAttributes)
         print('Inserindo %s' % varName)
-        graph.run('create (%s %s)' % varName, nodeAttributes)
+        graph.run(str('create (%s %s)' % varName, nodeAttributes)
         
     #Generate the relationship representations
     for anEdge in aGraph.edges(data = True):
@@ -42,7 +42,7 @@ def graph2Cypher(aGraph):
             edgeAttributes = "{%s}" % ",".join(map(lambda x:"%s:%s" %(x[0],x[1]) if not type(x[1])==str else "%s:'%s'" %(x[0],x[1]) ,edgeItems))
         #NOTE: Declare the links by their Cypher node-identifier rather than their Networkx node identifier
         #edgeStatements.append("(%s)-[:LINKED_TO %s]->(%s)" % (nodeStatements[anEdge[0]][0], edgeAttributes, nodeStatements[anEdge[1]][0]))
-        graph.run("create (%s)-[:LINKED_TO %s]->(%s)" % (nodeStatements[anEdge[0]][0], edgeAttributes, nodeStatements[anEdge[1]][0]))
+        graph.run(str("create (%s)-[:LINKED_TO %s]->(%s)" % (nodeStatements[anEdge[0]][0], edgeAttributes, nodeStatements[anEdge[1]][0]))
         
     #Put both definitions together and return the create statement.
     #return "create %s,%s;\n" % (",".join(map(lambda x:x[1][1],nodeStatements.items())),",".join(edgeStatements))
