@@ -29,7 +29,7 @@ def graph2Cypher(aGraph):
         #Create the key-value representation of the node's attributes taking care to add quotes when the value is of type string        
         nodeAttributes = "{%s}" % ",".join(map(lambda x:"%s:%s" %(x[0],x[1]) if not type(x[1])==str else "%s:'%s'" %(x[0],x[1]) ,nodeItems))
         #Store it to a dictionary indexed by the node-id.
-        #nodeStatements[aNode[0]] = [varName, "(%s %s)" % (varName, nodeAttributes)]
+        nodeStatements[aNode[0]] = [varName, "(%s %s)" % (varName, nodeAttributes)]
         #i_node = Node(varName, nodeAttributes)
         print("Inserindo %s" % varName)
         #print(str('create (%s %s)' % varName, nodeAttributes)) 
