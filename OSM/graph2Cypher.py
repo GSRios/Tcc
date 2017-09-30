@@ -3,6 +3,7 @@ Athanasios Anastasiou 28/07/2013
 """
 
 import random
+from ast import literal_eval
 from py2neo import Graph, Node, Relationship
 
 #Simple character lists
@@ -43,7 +44,7 @@ def graph2Cypher(aGraph):
             edgeAttributes = "{%s}" % ",".join(map(lambda x:"%s:%s" %(x[0],x[1]) if not type(x[1])==str else "%s:'%s'" %(x[0],x[1]) ,edgeItems))
         #NOTE: Declare the links by their Cypher node-identifier rather than their Networkx node identifier
         #edgeStatements.append("(%s)-[:LINKED_TO %s]->(%s)" % (nodeStatements[anEdge[0]][0], edgeAttributes, nodeStatements[anEdge[1]][0]))
-        print (edgeAttributes)
+        print (nodeStatements[anEdge[0]][0])
        ##print("create (%s)-[:LINKED_TO %s]->(%s)" % (nodeStatements[anEdge[0]][0], edgeAttributes, nodeStatements[anEdge[1]][0]))
         #graph.run(str("create (%s)-[:LINKED_TO %s]->(%s)" % (nodeStatements[anEdge[0]][0], edgeAttributes, nodeStatements[anEdge[1]][0])))
         
