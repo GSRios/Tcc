@@ -31,9 +31,9 @@ def graph2Cypher(aGraph):
         #Store it to a dictionary indexed by the node-id.
         #nodeStatements[aNode[0]] = [varName, "(%s %s)" % (varName, nodeAttributes)]
         #i_node = Node(varName, nodeAttributes)
-        print('Inserindo %s' % varName)
-        print(str('create (%s %s)' % varName, nodeAttributes)) 
-        #graph.run(str('create (%s %s)' % varName, nodeAttributes))
+        print("Inserindo %s" % varName)
+        #print(str('create (%s %s)' % varName, nodeAttributes)) 
+        graph.run("create (%s %s)" % varName, nodeAttributes)
         
     #Generate the relationship representations
     for anEdge in aGraph.edges(data = True):
