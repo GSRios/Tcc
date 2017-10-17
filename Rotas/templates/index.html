@@ -204,6 +204,22 @@
             </div>             
           </form>
           <button type="button" onclick="ajaxExec()" class="btn btn-default btn-md">Definir Rota</button>
+		  <div class="container-fluid">
+			  <div class="form-group col-lg-6">
+					<label for="bbox3">Upper Left</label>
+						<input type="text" style="font-size: x-small;"
+							class="form-control" name="bbox[3]" id="bbox3" placeholder="latitude"/>
+						<input type="text" style="font-size: x-small;"
+							class="form-control" name="bbox[0]" id="bbox0" placeholder="longitude"/>
+				</div>
+				<div class="form-group col-lg-6 ">
+					<label for="bbox1">Lower Right</label>
+						<input type="text" style="font-size: x-small;"
+							class="form-control" name="bbox[1]" id="bbox1" placeholder="latitude"/>
+						<input type="text" style="font-size: x-small;"
+							class="form-control" name="bbox[2]" id="bbox2" placeholder="longitude"/>
+				</div>
+			</div>
         </div>    
         <div class="col-sm-9 nopadding" id="mapDiv"> 
           <div id="mapa">
@@ -214,6 +230,7 @@
         </div>
       </div>    
     </div> 
+
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -334,6 +351,43 @@
               ])
           });
          
+		    var draw; // global so we can remove it later
+      function addInteraction() {
+			
+          geometryFunction = ol.interaction.Draw.createBox();//ol.interaction.Draw.createRegularPolygon(4);
+           
+          draw = new ol.interaction.Draw({
+			condition: ol.events.condition.altKeyOnly,
+            source: vectorSource,
+            type: /** @type {ol.geom.GeometryType} */ ('Circle'),
+            geometryFunction: geometryFunction
+          });
+		  map.removeInteraction(draw);
+          map.addInteraction(draw);
+        
+		draw.on('drawstart', function(){
+			vectorSource.clear(true);
+		});
+		
+		draw.on('drawend', function (evt){
+			var string = evt.feature.getGeometry().getCoordinates();
+			itest(string);
+		});
+      }
+	  
+      addInteraction();
+	  
+	  function itest(myString) {
+			var thebox = myString.toString().split(",");
+			var long1 = thebox[0];
+			var lat1 = thebox[1];
+			var long2 = thebox[4];
+			var lat2 = thebox[5];
+		document.getElementById("bbox0").value = long1;
+		document.getElementById("bbox3").value = lat1;
+		document.getElementById("bbox2").value = long2;
+		document.getElementById("bbox1").value = lat2;
+	}
 
           var iconStyle = new ol.style.Style({
             image: new ol.style.Icon({
