@@ -200,35 +200,40 @@
                       <i class="glyphicon glyphicon-minus"></i>
                   </button>
                 </span>
-              </div>              
+              </div> 
+              <h4 for="sel1" style="color: #FFF; margin-top: 10%">Lista de algoritmos:</h4>
+              <select class="form-control" id="sel1" style="margin-bottom: 4%; width: 97%">                   
+                  <option>ShortestPath</option>
+                  <option>A-Star</option>                      
+                </select>             
             </div>             
-          </form>
+          </form>                  
           <button type="button" onclick="ajaxExec()" class="btn btn-default btn-md">Definir Rota</button>
-		  <div class="container-fluid">
-			  <div class="form-group col-lg-6">
-					<label for="bbox3">Upper Left</label>
-						<input type="text" style="font-size: x-small;"
-							class="form-control" name="bbox[3]" id="bbox3" placeholder="latitude"/>
-						<input type="text" style="font-size: x-small;"
-							class="form-control" name="bbox[0]" id="bbox0" placeholder="longitude"/>
-				</div>
-				<div class="form-group col-lg-6 ">
-					<label for="bbox1">Lower Right</label>
-						<input type="text" style="font-size: x-small;"
-							class="form-control" name="bbox[1]" id="bbox1" placeholder="latitude"/>
-						<input type="text" style="font-size: x-small;"
-							class="form-control" name="bbox[2]" id="bbox2" placeholder="longitude"/>
-				</div>
-			</div>
-        </div>    
-        <div class="col-sm-9 nopadding" id="mapDiv"> 
-          <div id="mapa">
-            <div id="addResponsive" class="ol-selectable ol-mycontrol">
-              <button type="button" class="btn btn-default btn-md" onclick="carregaModal()" >Adicionar Pontos</button>
+          <div class="container-fluid" style="display: none">
+            <div class="form-group col-lg-6">
+              <label for="bbox3">Upper Left</label>
+                <input type="text" style="font-size: x-small;"
+                  class="form-control" name="bbox[3]" id="bbox3" placeholder="latitude"/>
+                <input type="text" style="font-size: x-small;"
+                  class="form-control" name="bbox[0]" id="bbox0" placeholder="longitude"/>
+            </div>
+            <div class="form-group col-lg-6 ">
+              <label for="bbox1">Lower Right</label>
+                <input type="text" style="font-size: x-small;"
+                  class="form-control" name="bbox[1]" id="bbox1" placeholder="latitude"/>
+                <input type="text" style="font-size: x-small;"
+                  class="form-control" name="bbox[2]" id="bbox2" placeholder="longitude"/>
             </div>
           </div>
-        </div>
-      </div>    
+            </div>    
+            <div class="col-sm-9 nopadding" id="mapDiv"> 
+              <div id="mapa">
+                <div id="addResponsive" class="ol-selectable ol-mycontrol">
+                  <button type="button" class="btn btn-default btn-md" onclick="carregaModal()" >Adicionar Pontos</button>
+                </div>
+              </div>
+            </div>
+          </div>    
     </div> 
 
     <!-- Modal -->
@@ -245,6 +250,22 @@
           </div>
           <div class="modal-footer">
             <button type="button" onclick="ajaxExec()" class="btn btn-default btn-md" data-dismiss="modal">Definir Rota</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	<div id="doDownload" style="left: 45%; width: 20%; height: 22%; overflow: hidden; top: 30%" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Deseja realizar o download da área selecionada?</h4>
+          </div>         
+          <div class="modal-footer">
+            <button type="button" onclick="" class="btn btn-default btn-md" data-dismiss="modal">Sim</button>
+			<button type="button" onclick="$('#doDownload').modal('hide')" class="btn btn-default btn-md" data-dismiss="modal">Não</button>
           </div>
         </div>
       </div>
@@ -309,7 +330,8 @@
                 plotaPonto(data);
               },
               error : function(xhr,errmsg,err) {
-                  alert(xhr.responseText);
+                  let xx = JSON.parse(xhr.responseText);
+                  alert(xx.message);
                   //alert(errmsg);
               }
           });
@@ -372,6 +394,7 @@
 		draw.on('drawend', function (evt){
 			var string = evt.feature.getGeometry().getCoordinates();
 			itest(string);
+			$('#doDownload').modal('show');
 		});
       }
 	  
