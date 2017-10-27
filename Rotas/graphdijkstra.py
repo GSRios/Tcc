@@ -252,6 +252,7 @@ def midPoint(lat1,lon1,lat2,lon2):
 
 def nearest_node(lat,lon, G):
     menor = 9999
+    menor_node = 0
     for i in G.nodes():
         dist_node = distancia(lat, lon, G.node[i]['lat'], G.node[i]['lon'])
         if(float(dist_node) < float(menor)):
