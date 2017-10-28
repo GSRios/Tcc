@@ -23,6 +23,6 @@ def get_bounding_box(minLat, minLon, maxLat, maxLon):
     authenticate("localhost:7474", "neo4j", "tccneo4j2017")
     # connect to authenticated graph database
     graph = Graph("http://localhost:7474/db/data/")    
-    file = '/var/lib/neo4j/data/database/bbox.graphml'
+    file = '/var/lib/neo4j/data/bbox.graphml'
     query = 'call apoc.export.graphml.query("match (n:Node)-[r:LINKED_TO]->() where (n.Lat >= \'%s\' AND n.Lat <= \'%s\') AND (n.Long >= \'%s\' AND n.Long <= \'%s\') return n,r","%s",{})' % (minLat, maxLat, minLon, maxLon,file)
     graph.run(query)
