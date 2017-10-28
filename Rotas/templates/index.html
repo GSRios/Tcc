@@ -10,6 +10,30 @@
    <script src="https://openlayers.org/en/v4.3.2/build/ol.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    <style type="text/css" media="screen">
+      .loader {
+        border: 8px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 8px solid #555;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        position: absolute;
+        z-index: 10;
+        top: 45%;
+        left: 50%;
+        
+      }
+
+      @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
       .ponto{
         padding-bottom: 5px;
         padding-right: 5px;
@@ -178,7 +202,10 @@
         </ul>
       </div>
     </nav>-->
-
+    <div id="loader" style="background-color: #343638; opacity: 0.7; z-index: 9; position: absolute; width: 100%; height: 95%; display: none">
+        <div class="loader"></div>
+    </div>
+    
      <div class="container-fluid" id="container">      
       <div class="row">
         <div class="col-sm-3 formAux" id="formId">
@@ -186,7 +213,7 @@
           <form id='principal_form'>
             <div class="form-group" id="formGroup">
               <div class="input-group input-group-sm">
-                <input type="text" value="-22.9013576,-43.3116128" name="ponto" class="form-control" placeholder="Ponto 1">
+                <input type="text" name="ponto" class="form-control" placeholder="Ponto 1">
                 <span class="input-group-btn">
                   <button id="add-ponto" class="btn btn-default" type="submit">
                       <i class="glyphicon glyphicon-plus"></i>
@@ -194,7 +221,7 @@
                 </span>
               </div>
                <div class="input-group input-group-sm">
-                <input type="text" value="-22.8671742,-43.3695197" name="ponto" class="form-control" placeholder="Ponto 2">
+                <input type="text" name="ponto" class="form-control" placeholder="Ponto 2">
                 <span class="input-group-btn">
                   <button class="remove-ponto btn btn-default" type="submit">
                       <i class="glyphicon glyphicon-minus"></i>
@@ -258,8 +285,7 @@
           </div>
         </div>
       </div>
-    </div>
-
+    </div>    
     <script>      
       $(document).ready(function() {
         if($(window).width() < 767){
@@ -307,6 +333,9 @@
         });
       });
 
+      function hideShowLoad(){
+        $("#loader").css('display') == "none" ? $("#loader").css({'display': ''}) : $("#loader").css({'display': 'none'});
+      }
       function downloadGraph(){
         let input = document.getElementById('principal_form')
         input.method = "POST";
@@ -315,7 +344,8 @@
 
       }
 
-      function ajaxExec(){          
+      function ajaxExec(){
+          hideShowLoad();          
           $.ajax({
               url: 'ajax/go/',
               type: "POST",
@@ -325,10 +355,12 @@
               dataType: 'json',
               success: function (data) {                
                 plotaPonto(data);
+                hideShowLoad();
               },
               error : function(xhr,errmsg,err) {
                   let xx = JSON.parse(xhr.responseText);
                   alert(xx.message);
+                  hideShowLoad();
                   //alert(errmsg);
               }
           });
@@ -349,8 +381,8 @@
             source: vectorSource
           }),
           olview = new ol.View({
-              center: [0, 0],
-              zoom: 2,
+              center: [-4811677.787535939, -2622499.8752179034],
+              zoom: 12,
               minZoom: 2,
               maxZoom: 20
           }),

@@ -23,7 +23,7 @@ def teste(request):
 
 	print coords[0][0]
 	data = {
-		'lista' : graph.get_dijkstra_path(float(coords[0][0]),float(coords[0][1]), float(coords[1][0]), float(coords[1][1]))
+		'lista' : graph.get_dijkstra_path(float(coords[0][1]),float(coords[0][0]), float(coords[1][1]), float(coords[1][0]))
 	}
 	return JsonResponse(data)
 
