@@ -262,6 +262,7 @@ def nearest_node(lat,lon, G):
 
 def get_dijkstra_path(startLat, startLong, endLat, endLong):
     return_list = []
+    print ('%s,%s,%s,%s') % (startLat, startLong, endLong, endLat)
     mid = midPoint(startLat, startLong, endLat, endLong)
 
     for i in mid:
