@@ -29,10 +29,16 @@ def teste(request):
 
 @csrf_exempt
 def download(request):
-	minLat = request.POST.get('minLat')
-	minLon = request.POST.get('minLon')
-	maxLat = request.POST.get('maxLat')
-	maxLon = request.POST.get('maxLon')
+	#teste inversao
+	#minLat = request.POST.get('minLat')
+	#minLon = request.POST.get('minLon')
+	#maxLat = request.POST.get('maxLat')
+	#maxLon = request.POST.get('maxLon')
+	#teste inversao
+	maxLat = request.POST.get('minLat')
+	maxLon = request.POST.get('minLon')
+	minLat = request.POST.get('maxLat')
+	minLon = request.POST.get('maxLon')
 	coordinates.get_bounding_box(minLat,minLon, maxLat, maxLon)
 	path = '/var/lib/neo4j/data/bbox.graphml'
 	file_path = os.path.join(settings.MEDIA_ROOT, path)
