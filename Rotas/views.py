@@ -16,6 +16,7 @@ def teste(request):
 
 	coordView = json.loads(request.POST.get('coordinate'))
 	coords = []
+	ret = []
 	try:
 		for idx, x in enumerate(coordView):
 			coords.append(coordinates.get_coordinate_from_address(x, idx)) 			
