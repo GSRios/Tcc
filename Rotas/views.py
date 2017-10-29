@@ -25,7 +25,7 @@ def teste(request):
 	ret = algorithms.get_dijkstra(float(coords[0][1]),float(coords[0][0]), float(coords[1][1]), float(coords[1][0]))
 	print ret
 	data = {
-		'lista' : json.dumps(ret)
+		'lista' : ret
 	}
 	return JsonResponse(data)
 
