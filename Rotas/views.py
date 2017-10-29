@@ -6,6 +6,7 @@ import graphdijkstra as graph
 import os
 from django.conf import settings
 import coordinates
+import algorithms
 
 def index(request):
   return render(request, "index.html")
@@ -21,7 +22,7 @@ def teste(request):
 	except ValueError as error:
 		return JsonResponse(data={'message': error.message}, status=500)	
 	data = {
-		'lista' : graph.get_dijkstra_path(float(coords[0][1]),float(coords[0][0]), float(coords[1][1]), float(coords[1][0]))
+		'lista' : algorithms.get_dijkstra(float(coords[0][1]),float(coords[0][0]), float(coords[1][1]), float(coords[1][0]))
 	}
 	return JsonResponse(data)
 
