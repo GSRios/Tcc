@@ -43,8 +43,7 @@ def get_dijikstra_path(minLat, minLon ,maxLat, maxLon):
     return return_list
 
 
-def get_a_start(minLat, minLon ,maxLat, maxLon):
-    #Local do arquivo onde serão salvos os pontos contidos no bounding box      
+def get_a_start(minLat, minLon ,maxLat, maxLon):    
     get_bounding_box(maxLat, maxLon, minLat, minLon)
     G = nx.read_graphml(file)
     return_list = []
