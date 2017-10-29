@@ -354,8 +354,8 @@
               },
               dataType: 'json',
               success: function (data) {                
-                plotaPonto(data);
                 hideShowLoad();
+                plotaPonto(data);                
               },
               error : function(xhr,errmsg,err) {
                   let xx = JSON.parse(xhr.responseText);
