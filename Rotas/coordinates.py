@@ -2,6 +2,7 @@
 from urllib2 import urlopen
 import json
 from py2neo import Graph,authenticate
+import call
 
 url = "http://nominatim.openstreetmap.org/search?format=json&limit=1&q="
 def get_coordinate_from_address(address, count):
@@ -26,3 +27,8 @@ def get_bounding_box(minLat, minLon, maxLat, maxLon):
     file = '/var/lib/neo4j/data/bbox.graphml'
     query = 'call apoc.export.graphml.query("match (n:Node)-[r:LINKED_TO]->() where (n.Lat >= \'%s\' AND n.Lat <= \'%s\') AND (n.Long >= \'%s\' AND n.Long <= \'%s\') return n,r","%s",{})' % (minLat, maxLat, minLon, maxLon,file)
     graph.run(query)
+    #Fixes the graphml file adding label keys to Nodes and Edges
+    insert_node_label = "sed -i '/<graphml xmlns/ a\<key id=\"labels\" for=\"node\" attr.name=\"labels\" attr.type=\"string\"\/>' %s" % (file)
+    insert_edge_label = "sed -i '/<graphml xmlns/ a\<key id=\"label\" for=\"edge\" attr.name=\"label\" attr.type=\"string\"\/>' %s" % (file)
+    call(insert_node_label, shell=True)
+    call(insert_edge_label, shell=True)
