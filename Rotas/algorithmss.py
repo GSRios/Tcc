@@ -32,14 +32,15 @@ def nearest_node(G,lat,lon):
     return menor_node
 
 def get_dijkstra_path(minLat, minLon ,maxLat, maxLon):
-    get_bounding_box(minLat, minLon, maxLat, maxLon)
+    get_bounding_box(maxLat, maxLon, minLat, minLon)
     G = nx.read_graphml(file)
     return_list = []
     start_node = nearest_node(G,minLat, minLon)
     end_node = nearest_node(G,maxLat, maxLon)
     SP = nx.dijkstra_path(G,start_node, end_node, weight='Weight')
     for i in SP:
-        return_list.append([float(G.node[i]['Lat']),float(G.node[i]['Long'])])
+        print G.node[i]
+        #return_list.append([float(G.node[i]['Lat']),float(G.node[i]['Long'])])
         #return_list.append({float(nodeAux[1]), float(nodeAux[0])})
     return return_list
 
