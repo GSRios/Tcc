@@ -10,6 +10,6 @@ def get_dijkstra(minLat, minLon, maxLat, maxLon):
     graph = Graph("http://localhost:7474/db/data/")
     query = 'MATCH (start:Node) MATCH (end:Node), p = shortestPath((start)-[*..1000000]-(end)) WHERE start.Long = \'%s\' and start.Lat = \'%s\'and end.Long = \'%s\' and end.Lat = \'%s\' RETURN p' % (minLon, minLat, maxLon, maxLat)
     print query
-    ret = graph.run(query)
-    ast.literal_eval(json.dumps(ret.data()))
+    #ret = graph.run(query)
+    #ast.literal_eval(json.dumps(ret.data()))
     return ast.literal_eval(json.dumps(ret.data()))
