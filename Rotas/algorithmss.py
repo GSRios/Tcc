@@ -30,7 +30,7 @@ def nearest_node(G,lat,lon):
             menor_node = i
     return menor_node
 
-def get_dijikstra_path(minLat, minLon ,maxLat, maxLon):
+def get_dijkstra_path(minLat, minLon ,maxLat, maxLon):
     get_bounding_box(maxLat, maxLon, minLat, minLon)
     G = nx.read_graphml(file)
     return_list = []
