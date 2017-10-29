@@ -11,5 +11,5 @@ def get_dijkstra(minLat, minLon, maxLat, maxLon):
     result = session.run(query)
     for record in result:
         for i in record['no']:
-            ret.append([float(i['Lat']), float(i['Long'])])
+            ret.append([float(i['Long']), float(i['Lat'])])
     return ret
