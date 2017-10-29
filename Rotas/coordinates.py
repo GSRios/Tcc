@@ -2,7 +2,7 @@
 from urllib2 import urlopen
 import json
 from py2neo import Graph,authenticate
-import call
+from subprocess import call
 
 url = "http://nominatim.openstreetmap.org/search?format=json&limit=1&q="
 def get_coordinate_from_address(address, count):
