@@ -11,8 +11,7 @@ def get_coordinate_from_address(address, count):
     ret = urlopen(('%s%s') % (url, address))
     listr= json.loads(ret.read())
     print len(listr) < 1
-    if len(listr) < 1:
-        print 'passei aqui'
+    if len(listr) < 1:      
         raise ValueError(('Os dados do endereco %d estão incorretos') %(count+1))
 
     return (listr[0]['lon'], listr[0]['lat'])
