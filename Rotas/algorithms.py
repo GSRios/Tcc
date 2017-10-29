@@ -1,4 +1,5 @@
 from py2neo import Graph,authenticate
+import ast
 
 
 def get_dijkstra(minLat, minLon, maxLat, maxLon):
@@ -9,5 +10,5 @@ def get_dijkstra(minLat, minLon, maxLat, maxLon):
     query = 'MATCH (start:Node) MATCH (end:Node), p = shortestPath((start)-[*..1000000]-(end)) WHERE start.Long = \'%s\' and start.Lat = \'%s\'and end.Long = \'%s\' and end.Lat = \'%s\' RETURN p' % (minLon, minLat, maxLon, maxLat)
     print query
     ret = graph.run(query)
-    print ret.data()
-    return ret.data()
+    print ast.literal_eval(ret.data())
+    return ast.literal_eval(ret.data())
