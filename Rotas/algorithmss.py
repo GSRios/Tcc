@@ -23,6 +23,7 @@ def distancia(lon1, lat1, lon2, lat2):
 
 def nearest_node(G,lat,lon):
     menor = 9999
+    menor_node = 0
     for i in G.nodes():
         dist_node = distancia(lat, lon, G.node[i]['Lat'], G.node[i]['Long'])
         if(float(dist_node) < float(menor)):
