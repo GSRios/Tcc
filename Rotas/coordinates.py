@@ -22,12 +22,15 @@ def get_bounding_box(minLat, minLon, maxLat, maxLon):
     # set up authentication parameters
     authenticate("localhost:7474", "neo4j", "tccneo4j2017")
     # connect to authenticated graph database
-    graph = Graph("http://localhost:7474/db/data/")    
+    graph = Graph("http://localhost:7474/db/data/")
     file = '/var/lib/neo4j/data/bbox.graphml'
-    query = 'call apoc.export.graphml.query("match (n:Node)-[r:LINKED_TO]->() where (n.Lat >= \'%s\' AND n.Lat <= \'%s\') AND (n.Long >= \'%s\' AND n.Long <= \'%s\') return n,r","%s",{})' % (minLat, maxLat, minLon, maxLon,file)
+    config = 'storeNodeIds: true, readLabels: false, useTypes: true'
+    query = 'call apoc.export.graphml.query("match (n:Node)-[r:LINKED_TO]->() where (n.Lat >= \'%s\' AND n.Lat <= \'%s\') AND (n.Long >= \'%s\' AND n.Long <= \'%s\') return n,r","%s",{%s})' % (minLat, maxLat, minLon, maxLon,file,config)
     graph.run(query)
-    #Fixes the graphml file adding label keys to Nodes and Edges
     insert_node_label = "sed -i '/<graphml xmlns/ a\<key id=\"labels\" for=\"node\" attr.name=\"labels\" attr.type=\"string\"\/>' %s" % (file)
     insert_edge_label = "sed -i '/<graphml xmlns/ a\<key id=\"label\" for=\"edge\" attr.name=\"label\" attr.type=\"string\"\/>' %s" % (file)
+    change_weight_type = "sed -i '/\<key id=\"Weight\" for/c\\<key id=\"Weight\" for=\"edge\" attr.name=\"Weight\" attr.type=\"double\"\/>' %s" % (file)
+    #Fixes the graphml file adding label keys to Nodes and Edges
     call(insert_node_label, shell=True)
     call(insert_edge_label, shell=True)
+    call(change_weight_type, shell=True)
