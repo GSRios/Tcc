@@ -230,8 +230,8 @@
               </div> 
               <h4 for="sel1" style="color: #FFF; margin-top: 10%">Lista de algoritmos:</h4>
               <select class="form-control" id="sel1" style="margin-bottom: 4%; width: 97%">                   
-                  <option>Dijkstra</option>
-                  <option>A-Star</option>                      
+                  <option value="1">Dijkstra</option>
+                  <option value="2">A-Star</option>                      
                 </select>             
             </div>  
             
@@ -350,7 +350,8 @@
               url: 'ajax/go/',
               type: "POST",
               data: {
-                'coordinate': JSON.stringify(getAllPoints())
+                'coordinate': JSON.stringify(getAllPoints()),
+                'algoritmoTipo' : $('#sel1').val()
               },
               dataType: 'json',
               success: function (data) {                

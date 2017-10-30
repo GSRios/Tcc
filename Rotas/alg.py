@@ -60,13 +60,27 @@ def nearest_node(G,lat,lon):
 
 def get_dijkstra_path(minLat, minLon ,maxLat, maxLon):
     mid = midPoint(minLat,minLon,maxLat,maxLon)
-    bbox = getBoundingBox(mid[0],mid[1],5000)
+    bbox = getBoundingBox(mid[0],mid[1],20000)
     get_bounding_box(bbox[2],bbox[3],bbox[0],bbox[1])
     G = nx.read_graphml(file)
     start_node = nearest_node(G,minLat,minLon)
     end_node = nearest_node(G,maxLat,maxLon)
     return_list = []
     SP = nx.dijkstra_path(G,start_node, end_node, weight='Weight')
+    for i in SP:
+        return_list.append([float(G.node[i]['Long']),float(G.node[i]['Lat'])])
+        #return_list.append({float(nodeAux[1]), float(nodeAux[0])})
+    return return_list
+
+def get_astar_path(minLat, minLon ,maxLat, maxLon):
+    mid = midPoint(minLat,minLon,maxLat,maxLon)
+    bbox = getBoundingBox(mid[0],mid[1],20000)
+    get_bounding_box(bbox[2],bbox[3],bbox[0],bbox[1])
+    G = nx.read_graphml(file)
+    start_node = nearest_node(G,minLat,minLon)
+    end_node = nearest_node(G,maxLat,maxLon)
+    return_list = []
+    SP = nx.astar_path(G,start_node, end_node, weight='Weight')
     for i in SP:
         return_list.append([float(G.node[i]['Long']),float(G.node[i]['Lat'])])
         #return_list.append({float(nodeAux[1]), float(nodeAux[0])})
