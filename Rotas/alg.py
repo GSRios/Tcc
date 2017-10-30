@@ -68,6 +68,6 @@ def get_dijkstra_path(minLat, minLon ,maxLat, maxLon):
     return_list = []
     SP = nx.dijkstra_path(G,start_node, end_node, weight='Weight')
     for i in SP:
-        return_list.append([float(G.node[i]['Lat']),float(G.node[i]['Long'])])
+        return_list.append([float(G.node[i]['Long']),float(G.node[i]['Lat'])])
         #return_list.append({float(nodeAux[1]), float(nodeAux[0])})
     return return_list
