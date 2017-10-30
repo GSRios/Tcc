@@ -60,7 +60,7 @@ def nearest_node(G,lat,lon):
 
 def get_dijkstra_path(minLat, minLon ,maxLat, maxLon):
     mid = midPoint(minLat,minLon,maxLat,maxLon)
-    bbox = getBoundingBox(mid[0],mid[1],20000)
+    bbox = getBoundingBox(mid[0],mid[1],10000)
     get_bounding_box(bbox[2],bbox[3],bbox[0],bbox[1])
     G = nx.read_graphml(file)
     start_node = nearest_node(G,minLat,minLon)
@@ -74,7 +74,7 @@ def get_dijkstra_path(minLat, minLon ,maxLat, maxLon):
 
 def get_astar_path(minLat, minLon ,maxLat, maxLon):
     mid = midPoint(minLat,minLon,maxLat,maxLon)
-    bbox = getBoundingBox(mid[0],mid[1],20000)
+    bbox = getBoundingBox(mid[0],mid[1],10000)
     get_bounding_box(bbox[2],bbox[3],bbox[0],bbox[1])
     G = nx.read_graphml(file)
     start_node = nearest_node(G,minLat,minLon)
