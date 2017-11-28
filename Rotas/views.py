@@ -25,6 +25,8 @@ def teste(request):
 		for idx, x in enumerate(coordView):
 			coords.append(coordinates.get_coordinate_from_address(x, idx)) 			
 	except ValueError as error:
+		if error.message == "":
+			error.message = 'Ocorreu um erro ao tentar obter um endereço. Tente novamente mais tarde.'
 		return JsonResponse(data={'message': error.message}, status=500)
 	
 	try:
