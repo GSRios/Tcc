@@ -1,4 +1,6 @@
-# coding=utf-8
+#!/usr/local/bin/python
+# -*- coding: utf-8 -*-
+
 from urllib2 import urlopen
 import json
 from py2neo import Graph,authenticate

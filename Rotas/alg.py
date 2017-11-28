@@ -1,3 +1,6 @@
+#!/usr/local/bin/python
+# -*- coding: utf-8 -*-
+
 from math import radians,cos,sin,atan2,sqrt,degrees,asin
 from py2neo import Graph,authenticate
 import networkx as nx
