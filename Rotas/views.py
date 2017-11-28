@@ -30,7 +30,7 @@ def teste(request):
 		else:
 			ret =  alg.get_astar_path(float(coords[0][1]),float(coords[0][0]), float(coords[1][1]), float(coords[1][0]))
 	except:
-		return JsonResponse(data={'message': "Falha no formato dos endereços. Favor verifique-os"}, status=500)
+		return JsonResponse(data={}, status=500)
 	
 	print ret
 	data = {
