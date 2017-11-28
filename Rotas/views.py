@@ -1,3 +1,6 @@
+#!/usr/local/bin/python
+# -*- coding: utf-8 -*-
+
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 import json
@@ -30,7 +33,7 @@ def teste(request):
 		else:
 			ret =  alg.get_astar_path(float(coords[0][1]),float(coords[0][0]), float(coords[1][1]), float(coords[1][0]))
 	except:
-		return JsonResponse(data={'message': 'Houve uma falha no fornecimento de um dos dados. Favor verifique-os e tente novamente'}, status=500)
+		return JsonResponse(data={'message': 'Houve uma falha na inserção de um dos endereços. Favor verifique-os e tente novamente'}, status=500)
 
 	print ret
 	data = {
